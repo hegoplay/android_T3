@@ -8,54 +8,56 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  SafeAreaView,
 } from "react-native";
 
 const Screen_02 = ({ navigation }) => {
+  let i = 0;
   const [data, setData] = useState([
     {
-      key: "1",
+      key: i++,
       type: "Vegetable",
       name: "Apple",
       price: "28.00",
       image: require("../assets/Data/Image 101.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Vegetable",
       name: "Pear",
       price: "28.00",
       image: require("../assets/Data/Image 102.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Vegetable",
       name: "Coconut",
       price: "28.00",
       image: require("../assets/Data/Image 103.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Vegetable",
       name: "Pear",
       price: "28.00",
       image: require("../assets/Data/Image 105.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Vegetable",
       name: "Coconut",
       price: "28.00",
       image: require("../assets/Data/Image 106.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Vegetable",
       name: "Coconut",
       price: "28.00",
       image: require("../assets/Data/Image 107.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Vegetable",
       name: "Pear",
       price: "28.00",
@@ -63,35 +65,35 @@ const Screen_02 = ({ navigation }) => {
     },
 
     {
-      key: "1",
+      key: i++,
       type: "Seafood",
       name: "Seafood 1",
       price: "28.00",
       image: require("../assets/Data/Image 95.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Seafood",
       name: "Seafood 2",
       price: "28.00",
       image: require("../assets/Data/Image 95.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Seafood",
       name: "Seafood 3",
       price: "28.00",
       image: require("../assets/Data/Image 95.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Seafood",
       name: "Seafood 4",
       price: "28.00",
       image: require("../assets/Data/Image 95.png"),
     },
     {
-      key: "1",
+      key: i++,
       type: "Seafood",
       name: "Seafood 5",
       price: "28.00",
@@ -99,43 +101,43 @@ const Screen_02 = ({ navigation }) => {
     },
 
     {
-      key: "1",
-      type: "Drink",
+      key: i++,
+      type: "Drinks",
       name: "Drink 1",
       price: "28.00",
       image: require("../assets/Data/Image 96.png"),
     },
     {
-      key: "1",
-      type: "Drink",
+      key: i++,
+      type: "Drinks",
       name: "Drink 2",
       price: "28.00",
       image: require("../assets/Data/Image 96.png"),
     },
     {
-      key: "1",
-      type: "Drink",
+      key: i++,
+      type: "Drinks",
       name: "Drink 3",
       price: "28.00",
       image: require("../assets/Data/Image 96.png"),
     },
     {
-      key: "1",
-      type: "Drink",
+      key: i++,
+      type: "Drinks",
       name: "Drink 4",
       price: "28.00",
       image: require("../assets/Data/Image 96.png"),
     },
     {
-      key: "1",
-      type: "Drink",
+      key: i++,
+      type: "Drinks",
       name: "Drink 5",
       price: "28.00",
       image: require("../assets/Data/Image 96.png"),
     },
     {
-      key: "1",
-      type: "Drink",
+      key: i++,
+      type: "Drinks",
       name: "Drink 6",
       price: "28.00",
       image: require("../assets/Data/Image 96.png"),
@@ -270,7 +272,7 @@ const Screen_02 = ({ navigation }) => {
             backgroundColor: type == "Drinks" ? "green" : "white",
           }}
           onPress={() => {
-            setType("Drink");
+            setType("Drinks");
             setInitialItemCount(6);
           }}
         >
@@ -306,38 +308,48 @@ const Screen_02 = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             setInitialItemCount(data.length);
+            setType("");
           }}
         >
           <Text style={{ fontSize: 25, color: "pink" }}>See all</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={data
-          .filter((item) => item.type == type)
-          .slice(0, initialItemCount)}
-        // 164
-          renderItem={({item})=>{
-            <View style = {{
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '45%',
-              marginHorizontal: '2.5%',
-              marginVertical: 10,
-              padding: 15,
-            }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <FlatList
+          data={data
+            .filter((item) => item.type.includes(type))
+            .splice(0, initialItemCount)}
+          // 164
+          renderItem={({ item }) => (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                width: "45%",
+                marginHorizontal: "2.5%",
+                marginVertical: 10,
+                padding: 15,
+              }}
+            >
               <TouchableOpacity
-                onPress={()=>{
-                  navigation.navigate("Screen_03")
+                onPress={() => {
+                  navigation.navigate("Screen_03");
                 }}
               >
-                <Image source={item.image}
-                style={{width: 150, height: 150}}
-                resizeMode="contain"/>
+                <Image
+                  source={item.image}
+                  style={{ width: 150, height: 150 }}
+                  resizeMode="contain"
+                />
               </TouchableOpacity>
-              <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 10}}>{item.name}</Text>
+              <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 10 }}>
+                {item.name}
+              </Text>
             </View>
-        }}
-      numColumns={2}/>
+          )}
+          numColumns={2}
+        />
+      </SafeAreaView>
     </ScrollView>
   );
 };
@@ -345,10 +357,10 @@ const Screen_02 = ({ navigation }) => {
 export default Screen_02;
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
+  container: {
+    flex: 1,
     backgroundColor: "#fff",
-    alignItems:'center',
-    justifyContent: 'center',
-  }
-})
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
